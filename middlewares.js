@@ -1,0 +1,8 @@
+import routes from "./routes";
+// local 변수를 global 하게 사용할 수 있게 만듦
+
+export const localsMiddleware = (req, res, next) => {
+  res.locals.siteName = "WeTube";
+  res.locals.routes = routes;
+  next(); // app.js 에서 다음 함수인 route 로 넘어가기 위해 필수
+};
