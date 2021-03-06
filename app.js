@@ -3,7 +3,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import { localsMiddleware } from "./middlewares";
+import { corsMiddleware, localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
@@ -20,6 +20,7 @@ app.use(bodyParser.json()); // 서버가 json data 이해하도록 parsing: requ
 app.use(bodyParser.urlencoded({ extended: true })); // 서버가 normal html 이해하도록 parsing
 app.use(morgan("dev")); // logging
 app.use(localsMiddleware); // route 보다 상위에 있어야 모든 route 에서 호출 가능
+app.use(corsMiddleware); // helmet middleware 의 CORS policy 때문에 추가
 
 /* --------------------------------- route --------------------------------------- */
 

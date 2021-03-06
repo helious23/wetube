@@ -6,3 +6,11 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.routes = routes;
   next(); // app.js 에서 다음 함수인 route 로 넘어가기 위해 필수
 };
+
+export const corsMiddleware = (req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "script-src 'self' https://archive.org"
+  );
+  return next();
+}
