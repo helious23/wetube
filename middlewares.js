@@ -16,5 +16,5 @@ export const corsMiddleware = (req, res, next) => {
     "Content-Security-Policy",
     "script-src 'self' https://archive.org"
   );
-  return next();
+  next();
 }

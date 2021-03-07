@@ -25,7 +25,9 @@ app.use(corsMiddleware); // helmet middleware 의 CORS policy 때문에 추가
 /* --------------------------------- route --------------------------------------- */
 
 app.use(routes.home, globalRouter);
-app.use(routes.users, userRouter);
+app.use(routes.users, userRouter);  
 app.use(routes.videos, videoRouter);
 
 export default app;
+
+/* --------------------------- export to init.js --------------------------------- */
