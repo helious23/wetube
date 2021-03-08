@@ -7,7 +7,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useFindAndModify: false,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true, // deprecation warning 때문에 추가
   }
 );
 
