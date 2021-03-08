@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config(); // .env 에서 URL 가지고 옴. .gitignore 에 .env 있는지 꼭 확인!
 
 mongoose.connect(
   process.env.MONGO_URL, 
