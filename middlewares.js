@@ -2,7 +2,7 @@ import routes from "./routes";
 // local 변수를 global 하게 사용할 수 있게 만듦
 import multer from "multer";
 
-const multerVideo = multer({dest:"videos/"}) // server 에 있는 video folder
+const multerVideo = multer({dest:"uploads/videos/"}) // server 에 있는 video folder
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "WeTube";
