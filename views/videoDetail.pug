@@ -2,9 +2,11 @@ extends layouts/main
 
 block content
     .video__player 
+        //- videoController 에서 video 변수에 담겨서 넘어옴
         video(src=`/${video.fileUrl}`, controls=true)
+        //- 현재 우리 server에 파일이 있으므로 / 넣어줘야 읽음 : 추후에 aws 로 server 변경시 수정
     .video__info 
-        a(href=routes.editVideo) Edit Video
+        a(href=routes.editVideo(video.id)) Edit Video
         h5.video__title= video.title 
         span.video__views= video.views
         p.video__description= video.description
