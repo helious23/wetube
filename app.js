@@ -19,7 +19,11 @@ const MongoStore = require("connect-mongo").default;
 
 /* ------------------------------ middleware ------------------------------------- */
 
-app.use(helmet()); // 보안처리
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+); // 보안처리
 app.set("view engine", "pug"); // res.render 사용 시, views 폴더에서 .pug 파일을 검색하도록 설정
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("static"));

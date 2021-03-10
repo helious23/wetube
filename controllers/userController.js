@@ -40,12 +40,14 @@ export const githubLogin = passport.authenticate("github");
 
 export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
-    _json: { id, avatarUrl, name, email },
+    _json: { id, avatar_url: avatarUrl, name, email },
   } = profile;
   try {
     const user = await User.findOne({ email });
     if (user) {
       user.githubId = id;
+      user.avatarUrl = avatarUrl;
+      user.name = name;
       user.save();
       return cb(null, user);
     } else {
@@ -58,17 +60,21 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
       return cb(null, newUser);
     }
   } catch (error) {
-    return cb(error);
+    return cb(error); // cb 첫 인자로 error가 있으면 그대로 종료
   }
 };
 
 export const postGithubLogIn = (req, res) => {
-  res.redirect(routes.home);
+  res.redirect(routes.home); // home 화면으로 redirect
 };
 
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
+};
+
+export const getMe = (req, res) => {
+  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
 };
 
 export const userDetail = (req, res) =>

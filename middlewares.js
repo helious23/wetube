@@ -7,7 +7,7 @@ const multerVideo = multer({ dest: "uploads/videos/" }); // server 에 있는 vi
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "WeTube";
   res.locals.routes = routes;
-  res.locals.user = req.user || null;
+  res.locals.loggedUser = req.user || null;
   next(); // app.js 에서 다음 함수인 route 로 넘어가기 위해 필수
 };
 
