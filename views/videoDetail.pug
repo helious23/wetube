@@ -1,18 +1,23 @@
 extends layouts/main
 
 block content
-    .video__player 
-        //- videoController 에서 video 변수에 담겨서 넘어옴
-        video(src=`/${video.fileUrl}`, controls=true)
-        //- 현재 우리 server에 파일이 있으므로 / 넣어줘야 읽음 : 추후에 aws 로 server 변경시 수정
-    .video__info 
-        a(href=routes.editVideo(video.id)) Edit Video
-        h5.video__title= video.title 
-        span.video__views= video.views
-        p.video__description= video.description
-    .video__comments 
-        if video.comments.length === 1
-            span.video__comment-number 1 comment 
-        else 
-            span.video__comment-number #{video.comments.length} comments 
+    .video-detail__container
+        .video__player 
+            //- videoController 에서 video 변수에 담겨서 넘어옴
+            video(src=`/${video.fileUrl}`, controls=true)
+            //- 현재 우리 server에 파일이 있으므로 / 넣어줘야 읽음 : 추후에 aws 로 server 변경시 수정
+        .video__info 
+            a(href=routes.editVideo(video.id)) 
+                button Edit Video
+            h5.video__title= video.title 
+            p.video__description= video.description
+            if video.views.length === 1
+                span.video__views 1 view
+            else
+                span.video__views #{video.views} views
+        .video__comments 
+            if video.comments.length === 1
+                span.video__comment-number 1 comment 
+            else 
+                span.video__comment-number #{video.comments.length} comments 
 
