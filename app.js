@@ -4,6 +4,7 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
+import session from "express-session";
 import { corsMiddleware, localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import globalRouter from "./routers/globalRouter";
@@ -13,6 +14,8 @@ import videoRouter from "./routers/videoRouter";
 import "./passport";
 
 const app = express(); // express 실행 및 app 생성
+
+const MongoStore = require("connect-mongo").default;
 
 /* ------------------------------ middleware ------------------------------------- */
 
@@ -24,10 +27,18 @@ app.use(cookieParser()); // cookie 에 있는 data 이해하도록 parsing: 사�
 app.use(bodyParser.json()); // 서버가 json data 이해하도록 parsing: requset 정보에서 form 이나 json 형태로 된 body를 검사
 app.use(bodyParser.urlencoded({ extended: true })); // 서버가 normal html 이해하도록 parsing
 app.use(morgan("dev")); // logging
-app.use(localsMiddleware); // route 보다 상위에 있어야 모든 route 에서 호출 가능
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+  })
+);
 app.use(passport.initialize()); // cookie parser 로 읽은 후에  passport 의 cookie 값 초기화
 app.use(passport.session()); //
 
+app.use(localsMiddleware); // route 보다 상위에 있어야 모든 route 에서 호출 가능
 app.use(corsMiddleware); // helmet middleware 의 CORS policy 때문에 추가
 
 /* --------------------------------- route --------------------------------------- */
