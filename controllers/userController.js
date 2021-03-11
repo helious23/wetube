@@ -36,7 +36,7 @@ export const postLogin = passport.authenticate("local", {
   successRedirect: routes.home,
 });
 
-/* --------------------- github login ---------------------*/
+/* ------------------------------- github login -------------------------------*/
 
 export const githubLogin = passport.authenticate("github");
 
@@ -70,7 +70,7 @@ export const postGithubLogIn = (req, res) => {
   res.redirect(routes.home); // home 화면으로 redirect
 };
 
-/* --------------------- facebook login ---------------------*/
+/* ------------------------------- facebook login -------------------------------*/
 
 export const facebookLogin = passport.authenticate("facebook");
 
@@ -113,12 +113,15 @@ export const getMe = (req, res) => {
   res.render("userDetail", { pageTitle: "User Detail", user: req.user });
 };
 
+/* -------------------------------------------------------------------------- */
+
 export const userDetail = async (req, res) => {
   const {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("videos");
+    console.log(user);
     res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
     res.redirect(routes.home);

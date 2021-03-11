@@ -50,7 +50,9 @@ button,
 input[type="submit"] {
   cursor: pointer;
 }
-
-a:visited {
-  color: white;
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
 }

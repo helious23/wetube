@@ -38,8 +38,10 @@ export const postUpload = async (req, res) => {
     fileUrl: path,
     title,
     description,
+    creator: req.user.id, // creator 에 user.id 대입하여 newVideo 객체 생성
   });
-  console.log(newVideo);
+  req.user.videos.push(newVideo.id); // db에 id만 push
+  req.user.save();
   res.redirect(routes.videoDetail(newVideo.id));
 };
 
@@ -48,7 +50,7 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req; // req.params.id 와 동일한 표현
   try {
-    const video = await Video.findById(id);
+    const video = await Video.findById(id).populate("creator"); // ObjectId type인 경우에만 사용 가능.
     // async await, mongoose 의 findById method : mongoose 의 id 로 Video model 에서 검색하여 결과 찾은 후 render 실행
     res.render("videoDetail", { pageTitle: video.title, video }); // videoDetail.pug 로 video 변수로 넘겨줌
   } catch (error) {
@@ -62,7 +64,11 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    res.render("editVideo", { pageTitle: `Edit ${video.title}`, video }); // editVideo template 으로 video object 전송
+    if (video.creator.toString() !== req.user.id) {
+      throw Error();
+    } else {
+      res.render("editVideo", { pageTitle: `Edit ${video.title}`, video }); // editVideo template 으로 video object 전송
+    }
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -87,7 +93,12 @@ export const deleteVideo = async (req, res) => {
     params: { id },
   } = req;
   try {
-    await Video.findOneAndRemove({ _id: id });
+    const video = await Video.findById(id);
+    if (String(video.creator) !== req.user.id) {
+      throw Error();
+    } else {
+      await Video.findOneAndRemove({ _id: id });
+    }
   } catch (error) {
     console.log(error);
   }
