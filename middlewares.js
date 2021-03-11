@@ -3,6 +3,7 @@ import routes from "./routes";
 // local 변수를 global 하게 사용할 수 있게 만듦
 
 const multerVideo = multer({ dest: "uploads/videos/" }); // server 에 있는 video folder
+const multerAvatar = multer({ dest: "uploads/avatars/" });
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "WeTube";
@@ -37,3 +38,4 @@ export const onlyPrivate = (req, res, next) => {
 
 // File Upload middleware
 export const uploadVideo = multerVideo.single("videoFile");
+export const uploadAvatar = multerAvatar.single("avatar");
