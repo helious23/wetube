@@ -13,5 +13,6 @@ module.exports = {
     "no-console": "off",
     "space-comment": "off",
     "no-else-return": "off",
+    "no-use-before-define": "off",
   },
 };
