@@ -1,16 +1,15 @@
 extends layouts/main
+include mixins/videoPlayer
 
 block content
     .video-detail__container
-        .video__player 
-            //- videoController 에서 video 변수에 담겨서 넘어옴
-            video(src=`/${video.fileUrl}`, controls=true)
-            //- 현재 우리 server에 파일이 있으므로 / 넣어줘야 읽음 : 추후에 aws 로 server 변경시 수정
+        +videoPlayer({
+            src:video.fileUrl
+        })
         .video__info 
-            if loggedUser
-                if video.creator.id === loggedUser.id
-                    a(href=routes.editVideo(video.id)) 
-                        button Edit Video
+            if loggedUser && video.creator.id === loggedUser.id
+                a(href=routes.editVideo(video.id)) 
+                    button Edit Video
             h5.video__title= video.title 
             p.video__description= video.description
             if video.views.length === 1
