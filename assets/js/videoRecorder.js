@@ -5,11 +5,23 @@ const videoPreview = document.getElementById("jsVideoPreview");
 let streamObject;
 let videoRecorder;
 
+/* ---------- camera off ------------ */
+const stopStreamedCam = (videoElem) => {
+  let stream = videoElem.srcObject;
+  const tracks = stream.getTracks();
+
+  tracks.forEach((track) => {
+    track.stop();
+  });
+  stream = null;
+};
+/* ---------------------------------- */
+
 const handleVideoData = (event) => {
   const { data: videoFile } = event;
   const link = document.createElement("a");
   link.href = URL.createObjectURL(videoFile);
-  link.download = "recorded.webm";
+  link.download = "recorded.mp4";
   document.body.appendChild(link);
   link.click();
 };
@@ -19,6 +31,7 @@ const stopRecording = () => {
   recordBtn.removeEventListener("click", stopRecording);
   recordBtn.addEventListener("click", getVideo);
   recordBtn.innerHTML = "Start recording";
+  stopStreamedCam(videoPreview); // camera off function 추가
 };
 
 const startRecording = () => {

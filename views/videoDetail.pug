@@ -12,7 +12,7 @@ block content
                     button Edit Video
             h5.video__title= video.title 
             p.video__description= video.description
-            if video.views.length === 1
+            if video.views === 1
                 span.video__views 1 view
             else
                 span.video__views #{video.views} views
