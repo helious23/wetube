@@ -1,5 +1,6 @@
 import routes from "../routes";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 
 export const home = async (req, res) => {
   try {
@@ -50,7 +51,9 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req; // req.params.id 와 동일한 표현
   try {
-    const video = await Video.findById(id).populate("creator"); // ObjectId type인 경우에만 사용 가능.
+    const video = await Video.findById(id)
+      .populate("creator")
+      .populate("comments"); // ObjectId type인 경우에만 사용 가능.
     // async await, mongoose 의 findById method : mongoose 의 id 로 Video model 에서 검색하여 결과 찾은 후 render 실행
     res.render("videoDetail", { pageTitle: video.title, video }); // videoDetail.pug 로 video 변수로 넘겨줌
   } catch (error) {
@@ -116,6 +119,29 @@ export const postRegisterView = async (req, res) => {
     video.views += 1;
     video.save();
     res.status(200);
+  } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+// Add Comment
+
+export const postAddComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { comment },
+    user,
+  } = req;
+  try {
+    const video = await Video.findById(id);
+    const newComment = await Comment.create({
+      text: comment,
+      creator: user.id,
+    });
+    video.comments.push(newComment.id);
+    video.save();
   } catch (error) {
     res.status(400);
   } finally {
