@@ -109,11 +109,12 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
-};
-
 /* -------------------------------------------------------------------------- */
+
+export const getMe = async (req, res) => {
+  const user = await User.findById(req.user.id).populate("videos");
+  res.render("userDetail", { pageTitle: "User Detail", user });
+};
 
 export const userDetail = async (req, res) => {
   const {
@@ -133,12 +134,13 @@ export const getEditProfile = (req, res) =>
 
 export const postEditProfile = async (req, res) => {
   const {
+    params: { id },
     body: { name, email },
     file,
   } = req;
   try {
     // await console.log(name, email, file);
-    await User.findByIdAndUpdate(req.user.id, {
+    await User.findByIdAndUpdate(id, {
       name,
       email,
       avatarUrl: file ? file.path : req.user.avatarUrl,
