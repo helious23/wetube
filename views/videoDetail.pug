@@ -31,7 +31,11 @@ block content
             form.add__comment#jsAddComment
                 input(type="text", placeholder="Add a comment")
             ul.video__comments-list#jsCommentList
-                each comment in video.comments.reverse()
+                each comment in commentArray.reverse()
                     li
-                        span=comment.text
+                        .jsCommentItem=comment.text 
+                        if loggedUser && String(comment.creator) === loggedUser.id
+                            button.jsDeleteBtn
+                                    i.fas.fa-eraser
+
 

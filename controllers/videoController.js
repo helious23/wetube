@@ -53,11 +53,11 @@ export const videoDetail = async (req, res) => {
   try {
     const video = await Video.findById(id)
       .populate("creator")
-      .populate("comments"); // ObjectId type인 경우에만 사용 가능.
-    // async await, mongoose 의 findById method : mongoose 의 id 로 Video model 에서 검색하여 결과 찾은 후 render 실행
-    res.render("videoDetail", { pageTitle: video.title, video }); // videoDetail.pug 로 video 변수로 넘겨줌
+      .populate("comments");
+    const commentArray = await Comment.find(video.comments.creator);
+    res.render("videoDetail", { pageTitle: video.title, video, commentArray }); // videoDetail.pug 로 video 변수로 넘겨줌
   } catch (error) {
-    res.redirect(routes.home); // error 발생시 홈화면으로 redirect
+    res.redirect(routes.home);
   }
 };
 
@@ -100,7 +100,7 @@ export const deleteVideo = async (req, res) => {
     if (String(video.creator) !== req.user.id) {
       throw Error();
     } else {
-      await Video.findOneAndRemove({ _id: id });
+      await Video.findOneAndRemove(id);
     }
   } catch (error) {
     console.log(error);
@@ -146,5 +146,31 @@ export const postAddComment = async (req, res) => {
     res.status(400);
   } finally {
     res.end();
+  }
+};
+
+// Delete comment
+
+export const postDeleteComment = async (res, req) => {
+  const {
+    req: {
+      user: { id },
+      body: { comment },
+    },
+  } = req;
+  try {
+    const commentItem = await Comment.find({ text: comment });
+    // console.log(commentItem);
+    console.log(commentItem[0].id);
+    if (String(commentItem[0].creator) !== id) {
+      throw Error();
+    } else {
+      await Comment.findByIdAndDelete(commentItem[0].id);
+    }
+  } catch (error) {
+    console.log(error);
+    //   res.status(400);
+    // } finally {
+    //   res.end();
   }
 };
