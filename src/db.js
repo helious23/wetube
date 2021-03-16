@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config(); // .env 에서 URL 가지고 옴. .gitignore 에 .env 있는지 꼭 확인!
 
 mongoose.connect(
-  process.env.PRODUCTION ? process.env.MONGO_URLPROD : process.env.MONGO_URL,
+  process.env.PRODUCTION ? process.env.MONGO_URL_PROD : process.env.MONGO_URL,
   {
     useNewUrlParser: true,
     useFindAndModify: false,
@@ -14,7 +14,7 @@ mongoose.connect(
 
 const db = mongoose.connection;
 
-const handleOpen = () => console.log("✅ Connected to DB");
+const handleOpen = () => console.log("✅  Connected to DB");
 const handleError = (error) =>
   console.log(`❌ Error on DB Connection:${error}`);
 
