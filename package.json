@@ -5,10 +5,10 @@
   "author": "Max Wang",
   "dependencies": {
     "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.8",
-    "@babel/node": "^7.13.0",
+    "@babel/core": "^7.13.10",
+    "@babel/node": "^7.13.10",
     "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.13.9",
+    "@babel/preset-env": "^7.13.10",
     "autoprefixer": "^10.2.5",
     "aws-sdk": "^2.863.0",
     "axios": "^0.21.1",
