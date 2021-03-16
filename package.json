@@ -9,6 +9,7 @@
     "@babel/node": "^7.13.0",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.13.9",
+    "autoprefixer": "^10.2.5",
     "aws-sdk": "^2.863.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
@@ -48,7 +49,6 @@
     "prestart": "npm run build"
   },
   "devDependencies": {
-    "autoprefixer": "^10.2.5",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.1.1",
     "eslint": "^7.21.0",
