@@ -53,7 +53,7 @@
     "build": "npm run build:server && npm run build:assets && npm run copyAll",
     
     "ngrok": "ngrok http 4000",
-    "start": "PRODUCTION=true node build/init.js",
+    "start": "PRODUCTION=true node build/init.js"
     
   },
   "devDependencies": {
