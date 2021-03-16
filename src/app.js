@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
 import session from "express-session";
+import path from "path";
 import { corsMiddleware, localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import globalRouter from "./routers/globalRouter";
@@ -26,8 +27,8 @@ app.use(
   })
 ); // 보안처리
 app.set("view engine", "pug"); // res.render 사용 시, views 폴더에서 .pug 파일을 검색하도록 설정
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+app.set("views", path.join(__dirname, "views"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser()); // cookie 에 있는 data 이해하도록 parsing: 사용자 인증 시 필요
 app.use(bodyParser.json()); // 서버가 json data 이해하도록 parsing: requset 정보에서 form 이나 json 형태로 된 body를 검사
 app.use(bodyParser.urlencoded({ extended: true })); // 서버가 normal html 이해하도록 parsing
