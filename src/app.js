@@ -19,7 +19,7 @@ import "./passport";
 
 const app = express();
 
-const CokieStore = MongoStore(session);
+const CokieStore = new MongoStore(session);
 
 /* ------------------------------ middleware ------------------------------------- */
 
@@ -40,7 +40,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
-    store: new CokieStore({ mongooseConnection: mongoose.connection }),
+    store: CokieStore({ mongooseConnection: mongoose.connection }),
   })
 );
 app.use(passport.initialize()); // cookie parser 로 읽은 후에  passport 의 cookie 값 초기화
