@@ -3,11 +3,14 @@ import dotenv from "dotenv";
 
 dotenv.config(); // .env 에서 URL 가지고 옴. .gitignore 에 .env 있는지 꼭 확인!
 
-mongoose.connect(process.env.MONGO_URL_PROD, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true, // deprecation warning 때문에 추가
-});
+mongoose.connect(
+  process.env.PRODUCTION ? process.env.MONGO_URLPROD : process.env.MONGO_URL,
+  {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true, // deprecation warning 때문에 추가
+  }
+);
 
 const db = mongoose.connection;
 
