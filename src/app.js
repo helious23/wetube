@@ -10,14 +10,14 @@ import path from "path";
 import MongoStore from "connect-mongo";
 import { corsMiddleware, localsMiddleware } from "./middlewares";
 import routes from "./routes";
-import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import globalRouter from "./routers/globalRouter";
 import apiRouter from "./routers/apiRouter";
 
 import "./passport";
 
-const app = express(); // express 실행 및 app 생성
+const app = express();
 
 const CokieStore = MongoStore(session);
 
