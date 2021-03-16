@@ -4,8 +4,10 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
+import mongoose from "mongoose";
 import session from "express-session";
 import path from "path";
+import MongoStore from "connect-mongo";
 import { corsMiddleware, localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import globalRouter from "./routers/globalRouter";
@@ -17,7 +19,7 @@ import "./passport";
 
 const app = express(); // express 실행 및 app 생성
 
-const MongoStore = require("connect-mongo").default;
+const CokieStore = MongoStore(session);
 
 /* ------------------------------ middleware ------------------------------------- */
 
@@ -38,7 +40,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+    store: new CokieStore({ mongooseConnection: mongoose.connection }),
   })
 );
 app.use(passport.initialize()); // cookie parser 로 읽은 후에  passport 의 cookie 값 초기화
