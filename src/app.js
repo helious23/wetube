@@ -21,7 +21,7 @@ const app = express();
 
 const CokieStore = new MongoStore(session);
 
-/* ------------------------------- middleware ------------------------------------- */
+/* ------------------------------- middleware ------------------------------------ */
 
 app.use(
   helmet({
