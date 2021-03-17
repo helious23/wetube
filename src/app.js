@@ -41,7 +41,7 @@ app.use(
     resave: true,
     saveUninitialized: false,
     // store: new CokieStore({ mongooseConnection: mongoose.connection }),
-    store: CokieStore.create({ mongoUrl: process.env.MONGO_URI }),
+    store: CokieStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );
 app.use(passport.initialize()); // cookie parser 로 읽은 후에  passport 의 cookie 값 초기화
