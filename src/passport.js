@@ -15,7 +15,7 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `https://intense-anchorage-89667.herokuapp.com/${routes.githubCallback}`,
+      callbackURL: `https://intense-anchorage-89667.herokuapp.com${routes.githubCallback}`,
     },
     githubLoginCallback
   )
