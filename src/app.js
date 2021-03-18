@@ -19,7 +19,7 @@ import "./passport";
 
 const app = express();
 
-const CokieStore = new MongoStore(session);
+const CokieStore = MongoStore(session);
 
 /* ------------------------------- middleware ------------------------------------ */
 
