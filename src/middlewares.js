@@ -1,6 +1,7 @@
 import multer from "multer";
 import multerS3 from "multer-s3";
 import aws from "aws-sdk";
+import path from "path";
 import routes from "./routes";
 // local 변수를 global 하게 사용할 수 있게 만듦
 
@@ -21,6 +22,15 @@ const multerAvatar = multer({
     s3,
     acl: "public-read",
     bucket: "healty-pharm-tube/avatar",
+    key: (req, file, cb) => {
+      const extension = path.extname(file.originalname);
+      cb(
+        null,
+        Math.random().toString(36).substring(2, 12) +
+          Date.now().toString() +
+          extension
+      );
+    },
   }),
 });
 
